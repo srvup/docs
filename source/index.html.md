@@ -53,8 +53,14 @@ $ npm install srvup --save
 ```
 
 
+# App Authorization
 
-# Client Authorization
+## Web Client Authorization
+
+Generally speaking, our `web-clients` are restricted to a origin (like a domain), `public token` and a `user auth token`.  We also want to keep our `secret token`, well, a secret. So we don't want that exposed to the public at large. Therefore we can ignore this token in `web-clients`.
+
+`secret token` is for Native Apps and Server-side apps as discussed below.
+
 
 > To authorize, use this code:
 
@@ -75,14 +81,49 @@ srvup expects for the API key to be included in all API requests to the server i
 `X-Srvup-Signature: yourPublicToken`
 
 <aside class="notice">
-You must set the value of <code>yourPublicToken</code> with your client's <b>public key</b>.
+You must set the value of <code>yourPublicToken</code> with your client's <b>public token</b>.
 </aside>
 
 
-# User Authorization
+## Native Apps and Server-side Authorization
 
-Coming soon.
+Native apps are anything you have to install on your system. Mobile apps are certainly the most popular native apps. Desktop Apps are not far behind. TV apps on the rise. Video Game Console Apps. Car Apps (like CarPlay, Android Auto, etc). 
 
+We treat server-side apps just as native apps as far as authenticating with srvup.
+
+To authenticate, you'll use the `public token` and `secret token` from creating your client above.
+
+
+The specifics of this type of authentication are forthcoming. 
+
+
+# Users
+
+## User Authorization
+
+To authenticate a user, you must: 
+
+- [Create a Client](https://www.srvup.com/apps) for your App
+
+- Authorize your App through a (1) [Web Client](#web-client-authorization) or (2) [Native App/Server-side app](#native-apps-and-server-side-authorization)
+
+- [Register a User](#register-user) and get the user's JWT `token`
+
+- [Login a User](#login-user) and get the user's JWT `token`
+
+- Set the following header on all requests made by the user:
+
+
+`Authorization: JWT <token>`
+
+
+## Register User 
+
+_coming soon_
+
+## Login User
+
+_coming soon_
 
 
 # Posts
@@ -169,7 +210,7 @@ This endpoint retrieves all published posts. To manage these posts, login to you
 
 ### HTTP Request
 
-`GET https://api.example.com/v1/posts/`
+`GET https://api.srvup.com/v1/posts/`
 
 
 ### Query Parameters
@@ -222,13 +263,155 @@ This endpoint retrieves a post that has already been published otherwise returns
 
 `GET https://api.srvup.com/v1/posts/<slug>/`
 
-`GET https://api.srvup.com/v1/posts/<id>/`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
 Slug | The related slug of the post to retrieve
-ID | The ID of the post to retrieve
 
+
+# Pages
+
+
+## All Pages
+
+> Basic
+
+```javascript
+function myResponseCallback (responseData, statusCode){
+  console.log(responseData, statusCode)
+}
+srvup.get('/pages/', myResponseCallback)
+```
+
+> Inline callback
+
+```javascript
+srvup.get('/pages/', (responseData, statusCode)=>{
+    console.log(responseData, statusCode)
+})
+```
+
+> React
+
+```javascript
+class MyComponent extends React.Compoment {
+  constructor(props){
+    super(props)
+    this.state ={
+      pages: [],
+      loading: true,
+    }
+  }
+
+  handleResponse = (responseData, statusCode) => {
+    console.log(responseData, statusCode)
+    if (statusCode === 200){
+      this.setState({
+        loading: false,
+        pages: responseData.results
+      })
+    }
+  }
+  componentDidMount() {
+    srvup.get('/pages/', this.handleResponse)
+  }
+
+  render () {
+    return <h1>Results Count {this.state.pages.length}</h1>
+  }
+  
+}
+```
+
+
+
+
+> Response Data
+
+```json
+{
+  "results": [
+    {
+      "id": 1,
+      "name": "Hello World",
+      "slug": "hello-word",
+      "content": "",
+      "publish": ""
+    },
+    {
+      "id": 2,
+      "name": "Hello World",
+      "slug": "hello-word",
+      "content": "",
+      "publish": ""
+    }
+  ]
+}
+```
+
+This endpoint retrieves all published pages. To manage these pages, login to your account on [https://www.srvup.com](http://www.srvup.com).
+
+### HTTP Request
+
+`GET https://api.srvup.com/v1/pages/`
+
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+limit | 10 | Changes maximum number of returned results.
+
+
+<aside class="success">
+Remember — this endpoint is for consumption not for management!
+</aside>
+
+## Single Page Item
+
+> Basic
+
+```javascript
+function myResponseCallback (responseData, statusCode){
+  console.log(responseData, statusCode)
+}
+srvup.get(`/pages/${pageSlug}/`, myResponseCallback)
+```
+
+> Inline callback
+
+```javascript
+srvup.get(`/pages/${pageSlug}/`, (responseData, statusCode)=>{
+    console.log(responseData, statusCode)
+})
+```
+
+
+> The above command returns JSON structured like this:
+
+```json
+{
+      "id": 2,
+      "name": "Hello World",
+      "slug": "hello-word",
+      "content": "",
+      "publish": ""
+    }
+```
+
+This endpoint retrieves a page that has already been published otherwise returns a 404.
+
+
+### HTTP Request
+
+`GET https://api.srvup.com/v1/pages/<slug>/`
+
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+Slug | The related slug of the page to retrieve
 
