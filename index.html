@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>API Reference -- Srvup.com</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -196,6 +196,8 @@
   color: #f92672;
 }
     </style>
+    <link href="images/favicon.ico" rel="icon" type="image/ico" />
+
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
       <script src="javascripts/all.js"></script>
@@ -228,10 +230,29 @@
             <a href="#installation" class="toc-h1 toc-link" data-title="Installation">Installation</a>
           </li>
           <li>
-            <a href="#client-authorization" class="toc-h1 toc-link" data-title="Client Authorization">Client Authorization</a>
+            <a href="#app-authorization" class="toc-h1 toc-link" data-title="App Authorization">App Authorization</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#web-client-authorization" class="toc-h2 toc-link" data-title="Web Client Authorization">Web Client Authorization</a>
+                  </li>
+                  <li>
+                    <a href="#native-apps-and-server-side-authorization" class="toc-h2 toc-link" data-title="Native Apps and Server-side Authorization">Native Apps and Server-side Authorization</a>
+                  </li>
+              </ul>
           </li>
           <li>
-            <a href="#user-authorization" class="toc-h1 toc-link" data-title="User Authorization">User Authorization</a>
+            <a href="#users" class="toc-h1 toc-link" data-title="Users">Users</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#user-authorization" class="toc-h2 toc-link" data-title="User Authorization">User Authorization</a>
+                  </li>
+                  <li>
+                    <a href="#register-user" class="toc-h2 toc-link" data-title="Register User">Register User</a>
+                  </li>
+                  <li>
+                    <a href="#login-user" class="toc-h2 toc-link" data-title="Login User">Login User</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#posts" class="toc-h1 toc-link" data-title="Posts">Posts</a>
@@ -241,6 +262,17 @@
                   </li>
                   <li>
                     <a href="#single-post-item" class="toc-h2 toc-link" data-title="Single Post Item">Single Post Item</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#pages" class="toc-h1 toc-link" data-title="Pages">Pages</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#all-pages" class="toc-h2 toc-link" data-title="All Pages">All Pages</a>
+                  </li>
+                  <li>
+                    <a href="#single-page-item" class="toc-h2 toc-link" data-title="Single Page Item">Single Page Item</a>
                   </li>
               </ul>
           </li>
@@ -282,7 +314,11 @@ Our JavaScript for web applications that require the srvup api. This client make
 <p>To install srvup.js, run below next to your <code>package.json</code></p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="gp">$ </span>npm install srvup --save
-</code></pre><h1 id='client-authorization'>Client Authorization</h1>
+</code></pre><h1 id='app-authorization'>App Authorization</h1><h2 id='web-client-authorization'>Web Client Authorization</h2>
+<p>Generally speaking, our <code>web-clients</code> are restricted to a origin (like a domain), <code>public token</code> and a <code>user auth token</code>.  We also want to keep our <code>secret token</code>, well, a secret. So we don&#39;t want that exposed to the public at large. Therefore we can ignore this token in <code>web-clients</code>.</p>
+
+<p><code>secret token</code> is for Native Apps and Server-side apps as discussed below.</p>
+
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
@@ -301,10 +337,32 @@ Our JavaScript for web applications that require the srvup api. This client make
 <p><code>X-Srvup-Signature: yourPublicToken</code></p>
 
 <aside class="notice">
-You must set the value of <code>yourPublicToken</code> with your client's <b>public key</b>.
+You must set the value of <code>yourPublicToken</code> with your client's <b>public token</b>.
 </aside>
-<h1 id='user-authorization'>User Authorization</h1>
-<p>Coming soon.</p>
+<h2 id='native-apps-and-server-side-authorization'>Native Apps and Server-side Authorization</h2>
+<p>Native apps are anything you have to install on your system. Mobile apps are certainly the most popular native apps. Desktop Apps are not far behind. TV apps on the rise. Video Game Console Apps. Car Apps (like CarPlay, Android Auto, etc). </p>
+
+<p>We treat server-side apps just as native apps as far as authenticating with srvup.</p>
+
+<p>To authenticate, you&#39;ll use the <code>public token</code> and <code>secret token</code> from creating your client above.</p>
+
+<p>The specifics of this type of authentication are forthcoming. </p>
+<h1 id='users'>Users</h1><h2 id='user-authorization'>User Authorization</h2>
+<p>To authenticate a user, you must: </p>
+
+<ul>
+<li><p><a href="https://www.srvup.com/apps">Create a Client</a> for your App</p></li>
+<li><p>Authorize your App through a (1) <a href="#web-client-authorization">Web Client</a> or (2) <a href="#native-apps-and-server-side-authorization">Native App/Server-side app</a></p></li>
+<li><p><a href="#register-user">Register a User</a> and get the user&#39;s JWT <code>token</code></p></li>
+<li><p><a href="#login-user">Login a User</a> and get the user&#39;s JWT <code>token</code></p></li>
+<li><p>Set the following header on all requests made by the user:</p></li>
+</ul>
+
+<p><code>Authorization: JWT &lt;token&gt;</code></p>
+<h2 id='register-user'>Register User</h2>
+<p><em>coming soon</em></p>
+<h2 id='login-user'>Login User</h2>
+<p><em>coming soon</em></p>
 <h1 id='posts'>Posts</h1><h2 id='all-posts'>All Posts</h2>
 <blockquote>
 <p>Basic</p>
@@ -376,7 +434,7 @@ You must set the value of <code>yourPublicToken</code> with your client's <b>pub
 </span></code></pre>
 <p>This endpoint retrieves all published posts. To manage these posts, login to your account on <a href="http://www.srvup.com">https://www.srvup.com</a>.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://api.example.com/v1/posts/</code></p>
+<p><code>GET https://api.srvup.com/v1/posts/</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -425,8 +483,6 @@ Remember — this endpoint is for consumption not for management!
 <p>This endpoint retrieves a post that has already been published otherwise returns a 404.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://api.srvup.com/v1/posts/&lt;slug&gt;/</code></p>
-
-<p><code>GET https://api.srvup.com/v1/posts/&lt;id&gt;/</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -438,9 +494,137 @@ Remember — this endpoint is for consumption not for management!
 <td>Slug</td>
 <td>The related slug of the post to retrieve</td>
 </tr>
+</tbody></table>
+<h1 id='pages'>Pages</h1><h2 id='all-pages'>All Pages</h2>
+<blockquote>
+<p>Basic</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">myResponseCallback</span> <span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">srvup</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/pages/'</span><span class="p">,</span> <span class="nx">myResponseCallback</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Inline callback</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">srvup</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/pages/'</span><span class="p">,</span> <span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+<blockquote>
+<p>React</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">class</span> <span class="nx">MyComponent</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Compoment</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">){</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span><span class="p">{</span>
+      <span class="na">pages</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">loading</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">handleResponse</span> <span class="o">=</span> <span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+        <span class="na">loading</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="na">pages</span><span class="p">:</span> <span class="nx">responseData</span><span class="p">.</span><span class="nx">results</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">componentDidMount</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">srvup</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'/pages/'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleResponse</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Results</span> <span class="nx">Count</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">pages</span><span class="p">.</span><span class="nx">length</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>  <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>Response Data</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello-word"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello-word"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all published pages. To manage these pages, login to your account on <a href="http://www.srvup.com">https://www.srvup.com</a>.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://api.srvup.com/v1/pages/</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<table><thead>
 <tr>
-<td>ID</td>
-<td>The ID of the post to retrieve</td>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>limit</td>
+<td>10</td>
+<td>Changes maximum number of returned results.</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+Remember — this endpoint is for consumption not for management!
+</aside>
+<h2 id='single-page-item'>Single Page Item</h2>
+<blockquote>
+<p>Basic</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kd">function</span> <span class="nx">myResponseCallback</span> <span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">srvup</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">`/pages/</span><span class="p">${</span><span class="nx">pageSlug</span><span class="p">}</span><span class="s2">/`</span><span class="p">,</span> <span class="nx">myResponseCallback</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Inline callback</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">srvup</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">`/pages/</span><span class="p">${</span><span class="nx">pageSlug</span><span class="p">}</span><span class="s2">/`</span><span class="p">,</span> <span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">responseData</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello-word"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"publish"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a page that has already been published otherwise returns a 404.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://api.srvup.com/v1/pages/&lt;slug&gt;/</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Slug</td>
+<td>The related slug of the page to retrieve</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
